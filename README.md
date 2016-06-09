@@ -43,10 +43,10 @@ funcA(123);
 After being bowrapped your module would also be available for people directly importing your script:
 
 ````
-var myModule = import().from('my-lib');
+var myModule = bowrap().from('my-lib');
 myModule.doStuff();
 
-var funcA = import('funcA'}.from('my-lib');
+var funcA = bowrap('funcA'}.from('my-lib');
 funcA(123);
 ````
 

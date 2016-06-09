@@ -1,0 +1,26 @@
+{
+  "name": "bowrap",
+  "version": "1.0.0",
+  "description": "A very simple browser support wrapper for allowing import of node modules in the browser.",
+  "main": "bowrap.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fergalhanley/bowrap.git"
+  },
+  "keywords": [
+    "node",
+    "browser",
+    "support",
+    "wrapper",
+    "import"
+  ],
+  "author": "Fergal Hanley <fergalhanley@gmail.com> (http://fergalhanley.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fergalhanley/bowrap/issues"
+  },
+  "homepage": "https://github.com/fergalhanley/bowrap#readme"
+}
