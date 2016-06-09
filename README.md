@@ -18,7 +18,7 @@ In your package.json
     "test": "mocha --compilers js:babel-register",
     "build": "npm run babel && npm run uglify && npm run bowrap",
     "babel": "babel --presets es2015 index.js --out-file .tmp/index-es5-temp.js",
-    "bowrap": "bowrap .tmp/index-es5-temp.js > .tmp/index-bowrapped-temp.js",
+    "bowrap": "node node_modules/bowrap/bowrap.js .tmp/index-es5-temp.js > .tmp/index-bowrapped-temp.js",
     "uglify": "uglifyjs .tmp/index-bowrapped-temp.js --output dist/index.min.js --screw-ie8 --compress"
   },
   :
@@ -35,9 +35,6 @@ So if you were importing your module in ES6 using:
 import myModule from 'my-lib';
 myModule.doStuff();
 
-import {funcA} from 'my-lib';
-funcA(123);
-
 ````
 
 After being bowrapped your module would also be available for people directly importing your script:
@@ -46,8 +43,6 @@ After being bowrapped your module would also be available for people directly im
 var myModule = bowrap().from('my-lib');
 myModule.doStuff();
 
-var funcA = bowrap('funcA'}.from('my-lib');
-funcA(123);
 ````
 
 ## Note
