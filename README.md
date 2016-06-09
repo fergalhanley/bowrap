@@ -18,7 +18,7 @@ In your package.json
     "test": "mocha --compilers js:babel-register",
     "build": "npm run babel && npm run uglify && npm run bowrap",
     "babel": "babel --presets es2015 index.js --out-file .tmp/index-es5-temp.js",
-    "bowrap": "node node_modules/bowrap/bowrap.js .tmp/index-es5-temp.js > .tmp/index-bowrapped-temp.js",
+    "bowrap": "node node_modules/bowrap/bowrap.js myLib .tmp/index-es5-temp.js > .tmp/index-bowrapped-temp.js",
     "uglify": "uglifyjs .tmp/index-bowrapped-temp.js --output dist/index.min.js --screw-ie8 --compress"
   },
   :
@@ -32,22 +32,21 @@ Your module will be importable by both ES6's import statement and available glob
 So if you were importing your module in ES6 using:
 
 ````
-import myModule from 'my-lib';
-myModule.doStuff();
+import myLib from 'my-lib';
+myLib.doStuff();
 
 ````
 
 After being bowrapped your module would also be available for people directly importing your script:
 
 ````
-var myModule = bowrap().from('my-lib');
-myModule.doStuff();
+myLib.doStuff();
 
 ````
 
 ## Note
-For the package name, bowrap uses the name field in package.json in the current project. An override for this may be implemented in the future.
+For the package name, bowrap uses the name field in package.json in the current project. This can be overridden as in the example above.
 
 ## What actully happened to my code?
 
-Not that much really. Bowrap just wraps your module in a self calling function and provides the import method which is globally avalable. Importing your modules in node is unaffected.
+Not that much really. Bowrap just wraps your module in a self calling function and puts the export on the global window object if it exists.
