@@ -12,7 +12,7 @@ fs.readFile(process.cwd() + '/' + inputFile, 'utf8', function (err, script) {
     var setup = (function () {
         if (typeof window !== 'undefined') {
             window.exports = {};
-            window.bowwrap = window.bowwrap || function (member) {
+            window.bowrap = window.bowrap || function (member) {
                     member = member || 'default';
                     return {
                         from: function from(moduleName) {
