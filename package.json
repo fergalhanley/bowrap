@@ -1,10 +1,13 @@
 {
   "name": "bowrap",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A very simple browser support wrapper for allowing import of node modules in the browser.",
   "main": "bowrap.js",
   "scripts": {
-    "test": "test"
+    "test": "echo Error no tests"
+  },
+  "bin": {
+    "bowrap": "bowrap.js"
   },
   "repository": {
     "type": "git",

@@ -13,14 +13,14 @@ fs.readFile(process.cwd() + '/' + inputFile, 'utf8', function (err, script) {
         if (typeof window !== 'undefined') {
             window.exports = {};
         }
-    }).toString().slice(13, -1);
+    }).toString();
 
     var teardown = (function () {
         if (typeof window !== 'undefined') {
             window['${name}'] = window.exports.default || window.exports;
         }
-    }).toString().slice(13, -1).replace('${name}', name);
+    }).toString().replace('${name}', name);
 
-    var bowrapped = setup + '(function(){' + script + '})();' + teardown;
+    var bowrapped = '(' + setup + ')();(function(){' + script + '})();(' + teardown + ')();';
     console.log(bowrapped);
 });
