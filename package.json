@@ -1,10 +1,12 @@
 {
   "name": "bowrap",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A very simple browser support wrapper for allowing import of node modules in the browser.",
   "main": "bowrap.js",
   "scripts": {
-    "test": "echo Error no tests"
+    "test": "npm run bowrap && mocha && npm run test-ui",
+    "bowrap": "node bowrap.js test/dummy-module.js -o test/bowrapped.js -n bowrapped",
+    "test-ui": "mocha-phantomjs test/test.html"
   },
   "bin": {
     "bowrap": "bowrap.js"
@@ -25,5 +27,14 @@
   "bugs": {
     "url": "https://github.com/fergalhanley/bowrap/issues"
   },
-  "homepage": "https://github.com/fergalhanley/bowrap#readme"
+  "homepage": "https://github.com/fergalhanley/bowrap#readme",
+  "dependencies": {
+    "meow": "^3.7.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "del-cli": "^0.2.0",
+    "mocha": "^2.5.3",
+    "mocha-phantomjs": "^4.0.2"
+  }
 }
