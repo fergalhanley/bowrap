@@ -1,9 +1,13 @@
 (function () {
-        if (typeof window !== 'undefined') {
-            window.exports = {};
-            window.module = {};
-        }
-    })();(function(){
+            if (typeof window !== 'undefined') {
+                window.exports = {};
+                window.module = {};
+            }
+        })();(function(){
+if(typeof window !== "undefined") {
+    window.MyPolyFill = true;
+}
+})();(function(){
 function test(){
     return true;
 }
@@ -11,7 +15,7 @@ function test(){
 module.exports = {
     test: test
 };})();(function () {
-        if (typeof window !== 'undefined') {
-            window['bowrapped'] = module.exports || exports.default || exports;
-        }
-    })();
+            if (typeof window !== 'undefined') {
+                window['bowrapped'] = module.exports || exports.default || exports;
+            }
+        })();

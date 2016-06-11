@@ -1,11 +1,11 @@
 {
   "name": "bowrap",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A very simple browser support wrapper for allowing import of node modules in the browser.",
   "main": "bowrap.js",
   "scripts": {
     "test": "npm run bowrap && mocha && npm run test-ui",
-    "bowrap": "node bowrap.js test/dummy-module.js -o test/bowrapped.js -n bowrapped",
+    "bowrap": "node bowrap.js test/dummy-module.js -o test/bowrapped.js -n bowrapped -p test/polyfill.js",
     "test-ui": "mocha-phantomjs test/test.html"
   },
   "bin": {

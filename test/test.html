@@ -19,6 +19,9 @@
             it('should import bowrapped module via script', function () {
                 assert.equal(true, bowrapped.test());
             });
+            it('should prepend the polyfill script', function () {
+                assert.equal(true, MyPolyFill);
+            });
         });
 
         mocha.run();

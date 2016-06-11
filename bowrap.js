@@ -9,8 +9,9 @@ var cli = meow([
     '  $ bowrap <path> [...]',
     '',
     'Options',
-    '  -o, --output  File to output to',
-    '  -n, --name    The name to use other than the name field in package.json',
+    '  -o, --output    File to output to',
+    '  -n, --name      The name to use other than the name field in package.json',
+    '  -p, --polyfill  Specify a polyfill file to prepend',
     '',
     'Example',
     '  $ bowrap src/index.js -o dist/index.js'
@@ -18,11 +19,13 @@ var cli = meow([
     string: [
         '_',
         'output',
-        'name'
+        'name',
+        'polyfill'
     ],
     alias: {
         o: 'output',
-        n: 'name'
+        n: 'name',
+        p: 'polyfill'
     }
 });
 
@@ -34,30 +37,44 @@ if (cli.input.length != 1) {
 var name = cli.flags.name || require(process.cwd() + '/package.json').name;
 var inputFile = cli.input[0];
 
-fs.readFile(process.cwd() + '/' + inputFile, 'utf8', function (err, script) {
-    if (err) {
-        throw err;
-    }
-
-    var setup = (function () {
-        if (typeof window !== 'undefined') {
-            window.exports = {};
-            window.module = {};
+if(cli.flags.polyfill){
+    fs.readFile(process.cwd() + '/' + cli.flags.polyfill, 'utf8', function (err, polyfill) {
+        if (err) {
+            throw err;
         }
-    }).toString();
+        bowrap('(function(){' + polyfill + '})();');
+    });
+}
+else {
+    bowrap('');
+}
 
-    var teardown = (function () {
-        if (typeof window !== 'undefined') {
-            window['${name}'] = module.exports || exports.default || exports;
+function bowrap(polyfill) {
+    fs.readFile(process.cwd() + '/' + inputFile, 'utf8', function (err, script) {
+        if (err) {
+            throw err;
         }
-    }).toString().replace('${name}', name);
 
-    var bowrapped = '(' + setup + ')();(function(){' + script + '})();(' + teardown + ')();';
+        var setup = (function () {
+            if (typeof window !== 'undefined') {
+                window.exports = {};
+                window.module = {};
+            }
+        }).toString();
 
-    if(cli.flags.output) {
-        fs.writeFile(cli.flags.output, bowrapped);
-    }
-    else {
-        console.log(bowrapped);
-    }
-});
+        var teardown = (function () {
+            if (typeof window !== 'undefined') {
+                window['${name}'] = module.exports || exports.default || exports;
+            }
+        }).toString().replace('${name}', name);
+
+        var bowrapped = '(' + setup + ')();' + polyfill + '(function(){' + script + '})();(' + teardown + ')();';
+
+        if (cli.flags.output) {
+            fs.writeFile(cli.flags.output, bowrapped);
+        }
+        else {
+            console.log(bowrapped);
+        }
+    });
+}
